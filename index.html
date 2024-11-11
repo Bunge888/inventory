@@ -21,12 +21,14 @@
         <th scope="col">item </th>
         <th scope="col">harga</th>
          <th scope="col">jumlah</th>
+         <th scope="col">subtotal</th>
         <th scope="col">Aksi</th>
       </tr>
     </thead>
     <tbody>
     </tbody>
   </table>
+  <p>total inventory : <b id="total"></b></p>
   
   <a href="formtambah.html">Tambah barang</a>
   
@@ -39,6 +41,7 @@
       let daftarbarang = await ambilDaftarbarang();
       
       let nomor = 1
+      let total = 0
       daftarbarang.forEach((data) => {
             elemenDaftarbarang.append(
               "<tr>" +
@@ -46,12 +49,17 @@
                "<td>" + data.item + "</td>" +
                "<td>" + data.harga + "</td>" +
                "<td>" + data.jumlah + "</td>" +
+               "<td>" + (data.harga * data.jumlah) + "</td>" +          
                
                "<td>" + "<a href='#' class='me-2 link-ubah' data='" + data.id + "'>ubah</a><button class='btn btn-danger tombol-hapus' data='" +data.id + "'>hapus</button> "  + "</td>" +
               "</tr>"
               )
+            
+              total = total + (data.harga * data.jumlah)
               nomor = nomor + 1
           })
+        
+        $ ("#total").html(total)
         
            $('.tombol-hapus').click(async function() {
              if (confirm("Apakah benar mau menghapus?")) {
